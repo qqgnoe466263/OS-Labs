@@ -133,7 +133,7 @@ $ chmod +x launch.sh
 $ ./launch.sh
 ```
 
-# Proof of Work
+## Proof of Work
 
 * 在QEMU中可用
 
@@ -187,7 +187,7 @@ level-2 entry = 0x01000000 + (0000000000 << 2) (中間10bit左移2)
 
 * 由上我們可以得知，v2p是有成功的，因為`0xc1000000`->`0x01000000`是正確的。
 
-## How to use gdb to debug kernel
+## Appendix : How to use gdb to debug kernel
 
 * In your work dir
 
