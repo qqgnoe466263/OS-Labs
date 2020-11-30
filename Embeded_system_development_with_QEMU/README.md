@@ -73,9 +73,9 @@ $ qemu-system-arm -M vexpress-a9 -m 512M -kernel arch/arm/boot/zImage -dtb arch/
 * `-append` : 給`kernel`啟動參數
     * `console=ttyAMA0` : 告訴kernel要用哪個terminal。(.config中的CONFIG_CONSOLE設定)
 
-:::info
-`tty` : 在linux中是terminal的統稱，`tty1~6`是`cmd line`介面，`tty7`是`GUI`介面
-:::
+
+> `tty` : 在linux中是terminal的統稱，`tty1~6`是`cmd line`介面，`tty7`是`GUI`介面
+
 
 ## Root filesystem
 
