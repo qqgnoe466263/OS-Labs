@@ -1,5 +1,5 @@
 # Embeded system development with QEMU
-###### tags: `embs`
+###### tags: `ARM` `Uboot` `QEMU` 
 
 ## Development environment
 
@@ -235,7 +235,7 @@ $ vim debug.sh
 
 ## U-boot booting ~
 
-* 這編列出一些重要的階段
+* 這邊列出一些重要的階段
 
     _start -> board_init_f -> relocate_code -> board_init_r -> main_loop
 
