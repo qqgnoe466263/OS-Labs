@@ -23,7 +23,7 @@
 
 ## Prerequisites
 
-```bash=
+```bash
 $ sudo apt-get install qemu qemu-system -y
 $ sudo apt-get install libncurses5-dev build-essential -y
 $ sudo apt-get install gcc-arm-linux-gnueabihf -y
@@ -39,14 +39,14 @@ $ sudo apt-get install flex -y
 
 ### Linux kernel source code (v4.14.13)
 
-```bash=
+```bash
 $ wget https://mirrors.edge.kernel.org/pub/linux/kernel/v4.x/linux-4.14.13.tar.gz 
 $ tar -xvf linux-4.14.13.tar.gz 
 ```
 
 ### Compiler kernel (ARM)
 
-```bash=
+```bash
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- vexpress_defconfig # create a vexpress config file
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig # GUI setting config
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- zImage -j8 
@@ -60,7 +60,7 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- dtbs
 
 ### Launch up
 
-```bash=
+```bash
 $ cd linux-4.14.13/
 $ qemu-system-arm -M vexpress-a9 -m 512M -kernel arch/arm/boot/zImage -dtb arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append "console=ttyAMA0"
 ```
@@ -83,14 +83,14 @@ $ qemu-system-arm -M vexpress-a9 -m 512M -kernel arch/arm/boot/zImage -dtb arch/
 
 ### Busybox source code
 
-```bash=
+```bash
 $ wget https://busybox.net/downloads/busybox-1.31.0.tar.bz2
 $ tar -xvf busybox-1.31.0.tar.bz2
 ```
 
 ### Compile Busybox
 
-```bash=
+```bash
 $ cd busybox-1.31.0/
 $ make menuconfig
     Settings -> Build Options -->
@@ -101,7 +101,7 @@ $ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j8 install
 
 ### Create Root file system
 
-```bash=
+```bash
 $ mkdir -p rootfs
 $ mkdir -p rootfs/dev
 $ mkdir -p rootfs/etc/init.d
@@ -133,7 +133,7 @@ $ sudo umount tmpfs
 
 ### Launch up
 
-```bash=
+```bash
 $ qemu-system-arm -M vexpress-a9 -m 512M -kernel arch/arm/boot/zImage -dtb arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append "root=/dev/mmcblk0 console=ttyAMA0" -sd ../busybox-1.31.0/a9rootfs.ext4
 ```
 
@@ -143,14 +143,14 @@ $ qemu-system-arm -M vexpress-a9 -m 512M -kernel arch/arm/boot/zImage -dtb arch/
 
 ### U-boot source code
 
-```bash=
+```bash
 $ wget ftp://ftp.denx.de/pub/u-boot/u-boot-2019.10.tar.bz2
 $ tar -xvf u-boot-2019.10.tar.bz2
 ```
 
 ### Compile U-Boot
 
-```bash=
+```bash
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- vexpress_ca9x4_defconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- menuconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j8
@@ -158,7 +158,7 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j8
 
 ## Make a SD card
 
-```bash=
+```bash
 $ mkdir sd_card
 $ cd sd_card
 
@@ -200,7 +200,7 @@ $ sudo losetup -d /dev/loop3
 
 ### Start up (u-boot)
 
-```bash=
+```bash
 $ qemu-system-arm -M vexpress-a9 -m 512M -nographic -kernel ./u-boot -sd ./uboot.disk
 
 => load mmc 0:1 0x60008000 zImage
@@ -215,7 +215,7 @@ $ qemu-system-arm -M vexpress-a9 -m 512M -nographic -kernel ./u-boot -sd ./uboot
 
 * So we need `ARM gdb`.
 
-```bash=
+```bash
 $ wget http://ftp.gnu.org/gnu/gdb/gdb-8.1.tar.gz
 $ tar -xvf gdb-8.1.tar.gz
 $ cd gdb-8.1
@@ -224,7 +224,7 @@ $ make -j8
 ```
 * Debug script
 
-```bash=
+```bash
 $ vim debug.sh
 
 #!/bin/sh
@@ -245,7 +245,7 @@ $ vim debug.sh
 
 ![](https://i.imgur.com/84AmLKS.jpg)
 
-```script=
+```script
 (gdb) symbol-file
 Discard symbol table from `/home/pwn/embs/u-boot-2019.10/u-boot'? (y or n) y
 Error in re-setting breakpoint 1: No symbol table is loaded.  Use the "file" command.
@@ -271,7 +271,7 @@ Reading symbols from u-boot...done.
 * https://blog.csdn.net/ooonebook/article/details/53164198
 
 > 一些感覺可以加入偵測的地方(?)
-```bash=
+```bash
 // relocaddr
 0x60f8a000
 
@@ -295,10 +295,10 @@ cmd/time.c
 * Method1 : 將輸出導向到某個`serial port`然後算一下開始與結束，可以用`grabserial`工具，但都導向不成功orz。
 * Method2 : `QEMU`可以導到TCP上面，那就寫個`py script`抓個字串測量時間就好了，但可能不太準要考慮到網路blabla的效率?
 
-```bash=
+```bash
 $ qemu-system-arm -M vexpress-a9 -m 16M -nographic -kernel ./u-boot -append "console=ttyAMA0" -serial tcp:127.0.0.1:4444
 ```
-```python=
+```python
 #!/usr/bin/env python                                                     
 from pwn import *
 import time
@@ -321,7 +321,7 @@ l.close()
 
 * common/main.c
 
-```c=
+```c
 void main_loop()
 {
     ...
@@ -331,7 +331,7 @@ void main_loop()
 ```
 * common/autoboot.c
 
-```c=
+```c
 void autoboot_command(const char *s) 
 {
     debug("### main_loop: bootcmd=\"%s\"\n", s ? s : "<UNDEFINED>");
@@ -367,7 +367,7 @@ void autoboot_command(const char *s)
 
 * cmd/hello.c
 
-```c=
+```c
 #include <common.h>
 #include <command.h>
 
@@ -384,7 +384,7 @@ U_BOOT_CMD(hello, CONFIG_SYS_MAXARGS, 0, do_hello,
 
 * cmd/Makefile
 
-```bash=
+```bash
 ...
 # command
 obj-y += hello.o
