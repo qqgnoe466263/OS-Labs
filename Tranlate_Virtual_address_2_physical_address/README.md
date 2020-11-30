@@ -13,13 +13,14 @@
     * minimal Debian Linux image (file system) (from google)
     * QEMU emulator version 2.11.1
 * Directory Hierarchy (~/NCU_LINUX/):
-```bash=
+
+```bash
 # Initial directory hierarchy
 ~/NCU_LINUX/
     - linux-5.5.1
     - create-image.sh # creates a minimal Debian Linux image suitable for syzkaller from google
 ```
-```bash=
+```bash
 # Full directory hierarchy
 ~/NCU_LINUX/
     - linux-5.5.1
@@ -35,7 +36,7 @@
 
 ## Prerequisites
 
-```bash=
+```bash
 $ sudo apt-get install qemu qemu-system -y
 $ sudo apt-get install libncurses5-dev build-essential -y
 $ sudo apt-get install flex bison -y
@@ -48,14 +49,14 @@ $ sudo apt-get install debootstrap -y
 
 ### Linux kernel source code (v5.5.1)
 
-```bash=
+```bash
 $ wget https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.5.1.tar.gz
 $ tar -xvf linux-5.5.1.tar.gz
 ```
 
 ### Configuration 
 > Before compiling kernel, can choose some configs need or not
-```bash=
+```bash
 $ cd linux-5.5.1/
 # method 1
 $ make menuconfig # GUI 
@@ -65,7 +66,7 @@ $ vim .config
 
 * Method1
 
-```bash=
+```bash
 [ ] 64-bit kernel # choose x86 or x64 system (x64 by default)
 
 KernelHacking -->
@@ -91,7 +92,7 @@ Device Drivers -->
 ```
 
 ### Compile kernel 
-```bash=
+```bash
 $ cd linux-5.5.1
 $ make -j8
 ```
@@ -100,7 +101,7 @@ $ make -j8
 ## Root File system
 
 * Create root file system.
-```bash=
+```bash
 $ wget https://raw.githubusercontent.com/google/syzkaller/master/tools/create-image.sh -O create-image.sh
 $ chmod +x create-image.sh
 $ ./create-image.sh -a i386
@@ -111,7 +112,7 @@ chroot stretch.img linux-5.5.1...
 
 ## Launch up 
 
-```bash=
+```bash
 $ vim launch.sh
 
 #!/bin/bash
@@ -124,7 +125,7 @@ sudo qemu-system-x86_64 \
 #  -s -S # This is for gdb debug
 # -monitor tcp:127.0.0.1:4444,server,nowait # This is for qemu-monitor
 ```
-```bash=
+```bash
 # Now we check our work dir, should have these files.
 $ ls
 chroot linux-5.5.1 stretch.img launch.sh ...
@@ -137,7 +138,7 @@ $ ./launch.sh
 
 * 在QEMU中可用
 
-```bash=
+```bash
 (gdb) lx-iomem
 ...
 01000000-01a589c3 : Kernel code
@@ -149,7 +150,7 @@ $ ./launch.sh
 
 * 實際上要加上 0xc0000000 才是能看到東西
 
-```bash=
+```bash
 # 例如
 (gdb) x/10gx 0xc1000000
 0xc1000000 <startup_32>:        0x86f601e5ed600d8b      0x0f16754000000211
@@ -160,7 +161,7 @@ $ ./launch.sh
 * virtual 2 physical
 	* Demo case : kernel virtual address
 
-```bash=
+```bash
 (gdb) p $init_mm.pgd
 	pgd : 0xc2067000
 
@@ -191,7 +192,7 @@ level-2 entry = 0x01000000 + (0000000000 << 2) (中間10bit左移2)
 
 * In your work dir
 
-```bash=
+```bash
 $ ls # 你的工作目錄下應該要有這些
 chroot linux-5.5.1 ....
 # 先設定一下 .gdbinit
@@ -217,12 +218,12 @@ $ gdb linux-5.5.1/vmlinux
 * 此類`task`功能(e.g. `lx_task_by_pid`)，有bug，讓功能正常的方式為:
     * 修一下這個`script`
 
-```bash=
+```bash
 $ vim linux-5.5.1/scripts/gdb/linux/task.py
 ```
 * 隨便的修法
 
-```python=
+```python
 
 # 隨便寫一個爬task struct的function
 def my_task_lists(pid):
