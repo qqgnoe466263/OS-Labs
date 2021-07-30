@@ -108,6 +108,7 @@ Processor type and features -->
 ```bash
 $ cd linux-5.5.1
 $ make -j8
+$ make -j8 bzImage
 ```
 > After compiling kernel, we will get this `linux-5.5.1/arch/x86/boot/bzImage`
 
