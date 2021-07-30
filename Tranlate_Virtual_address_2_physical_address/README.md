@@ -97,7 +97,7 @@ Processor type and features -->
 * Method2
 
 ```bash
-# deny
+# deny these features if ur host is ubuntu20.04
 # CONFIG_MODULE_SIG_ALL
 # CONFIG_MODULE_SIG_KEY
 # CONFIG_SYSTEM_TRUSTED_KEYS
