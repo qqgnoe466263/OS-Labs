@@ -1,5 +1,4 @@
-# Compile Linux Kernel 
-# Explain:how to Tranlate virtual address to physical address
+# Compile Linux Kernel && Explain : how to Tranlate virtual address to physical address
 ###### tags: `Linux Kernel` `virtual address` `physical address`
 
 ## Development environment
