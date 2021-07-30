@@ -88,7 +88,9 @@ Device Drivers -->
         [ ] Android Drivers
 
 # This make debugging easier
-[ ] Randomize the address of the kernel image (KASLR)
+Processor type and features -->
+	Build a relocatable kernel
+		[ ] Randomize the address of the kernel image (KASLR)
 ```
 
 ### Compile kernel 
