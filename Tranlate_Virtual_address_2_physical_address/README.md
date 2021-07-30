@@ -4,8 +4,8 @@
 ## Development environment
 
 * Host
-    * Ubuntu 18.04.1 x86_64
-    * Linux ubuntu 5.4.0-54-generic
+    * Ubuntu 20.04 x86_64
+    * Linux ubuntu 5.8.0-63-generic
     * Intel(R) Core(TM) i5-8500 CPU @ 3.00GHz
     * DRAM DDR4 8GB
 * Guest
@@ -43,6 +43,7 @@ $ sudo apt-get install flex bison -y
 $ sudo apt-get install bridge-utils -y
 $ sudo apt-get install gcc-multilib -y # for gcc -m32
 $ sudo apt-get install debootstrap -y
+$ sudo apt-get install libssl-dev
 ```
 
 ## Linux kernel (x86_64)
