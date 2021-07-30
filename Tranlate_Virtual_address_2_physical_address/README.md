@@ -94,6 +94,16 @@ Processor type and features -->
 		[ ] Randomize the address of the kernel image (KASLR)
 ```
 
+* Method2
+
+```bash
+# deny
+# CONFIG_MODULE_SIG_ALL
+# CONFIG_MODULE_SIG_KEY
+# CONFIG_SYSTEM_TRUSTED_KEYS
+```
+
+
 ### Compile kernel 
 ```bash
 $ cd linux-5.5.1
