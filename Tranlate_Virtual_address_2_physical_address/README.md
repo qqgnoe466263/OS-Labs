@@ -43,7 +43,7 @@ $ sudo apt-get install flex bison -y
 $ sudo apt-get install bridge-utils -y
 $ sudo apt-get install gcc-multilib -y # for gcc -m32
 $ sudo apt-get install debootstrap -y
-$ sudo apt-get install libssl-dev
+$ sudo apt-get install libssl-dev -y
 ```
 
 ## Linux kernel (x86_64)
